@@ -95,16 +95,15 @@ function scorerPrompt() {
 }
 
 function transform(scoreObject) {
-   let newObject = scoreObject;
+   let newObject = {}
    let extractedLetter = "";
    let oldPointStructureKeys = [];
-   for (key in newObject) oldPointStructureKeys.push(key);
+   for (key in scoreObject) oldPointStructureKeys.push(key);
    for (let i = 0; i < oldPointStructureKeys.length; i++) {
-      while (newObject[oldPointStructureKeys[i]].length > 0) {
-         extractedLetter = newObject[oldPointStructureKeys[i]].shift();
-         newObject[extractedLetter.toLowerCase()] = Number(oldPointStructureKeys[i]);
-      };
-      delete newObject[oldPointStructureKeys[i]];
+      for (let j = 0; j < scoreObject[oldPointStructureKeys[i]].length; j++) {
+         extractedLetter = scoreObject[oldPointStructureKeys[i]][j].toLowerCase();
+         newObject[extractedLetter] = Number(oldPointStructureKeys[i]);
+      }
    }
    return newObject;
 };
