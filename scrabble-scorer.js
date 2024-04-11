@@ -95,20 +95,21 @@ function scorerPrompt() {
 }
 
 function transform(scoreObject) {
-   let oldPointStructureKeys = ["1", "2", "3", "4", "5", "8", "10"];
+   let newObject = scoreObject;
    let extractedLetter = "";
+   let oldPointStructureKeys = [];
+   for (key in newObject) oldPointStructureKeys.push(key);
    for (let i = 0; i < oldPointStructureKeys.length; i++) {
-      while (scoreObject[oldPointStructureKeys[i]].length > 0) {
-         extractedLetter = scoreObject[oldPointStructureKeys[i]].shift();
-         scoreObject[extractedLetter.toLowerCase()] = Number(oldPointStructureKeys[i]);
+      while (newObject[oldPointStructureKeys[i]].length > 0) {
+         extractedLetter = newObject[oldPointStructureKeys[i]].shift();
+         newObject[extractedLetter.toLowerCase()] = Number(oldPointStructureKeys[i]);
       };
-      delete scoreObject[oldPointStructureKeys[i]];
+      delete newObject[oldPointStructureKeys[i]];
    }
-   let newOutput = scoreObject
-   return newOutput
+   return newObject;
 };
 
-let newPointStructure = transform(oldPointStructure);
+let newPointStructure = transform(oldPointStructure)
 
 function runProgram() {
    console.log(scorerPrompt().scorerFunction(initialPrompt()))
